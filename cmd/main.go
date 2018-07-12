@@ -50,10 +50,25 @@ func main() {
 	keywords := &keywordPatterns{}
 	flag.Var(keywords, "k", "keyword patterns (required)")
 
-	notifyBearychatRTMToken := flag.String("notify-bearychat-rtm-token", "", "bearychat rtm token")
-	notifyBearychatRTMChannel := flag.String("notify-bearychat-channel", "", "bearychat notification channel")
+	notifyBearychatRTMToken := flag.String(
+		"notify-bearychat-rtm-token",
+		EnvNotifyBearychatRTMToken,
+		"bearychat rtm token",
+	)
+	notifyBearychatRTMChannel := flag.String(
+		"notify-bearychat-channel",
+		EnvNotifyBearychatRTMChannel,
+		"bearychat notification channel",
+	)
+
+	help := flag.Bool("h", false, "show help")
 
 	flag.Parse()
+
+	if *help {
+		flag.Usage()
+		return
+	}
 
 	if *file == "" {
 		flag.Usage()
