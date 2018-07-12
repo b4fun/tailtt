@@ -96,6 +96,7 @@ func main() {
 	if err != nil {
 		abort(err)
 	}
+	defer t.Cleanup()
 
 	for line := range t.Lines {
 		if keywords.MatchLine(line.Text) {
