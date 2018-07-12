@@ -6,7 +6,9 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/signal"
 	"regexp"
+	"syscall"
 
 	"github.com/b4fun/tailtt/notification"
 	"github.com/hpcloud/tail"
@@ -96,7 +98,14 @@ func main() {
 	if err != nil {
 		abort(err)
 	}
-	defer t.Cleanup()
+
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		t.Cleanup()
+		os.Exit(1)
+	}()
 
 	for line := range t.Lines {
 		if keywords.MatchLine(line.Text) {
