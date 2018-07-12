@@ -12,6 +12,20 @@ $ tailtt \
   -notify-bearychat-rtm "<BEARYCHAT-RTM-TOKEN>"
 ```
 
+## Build
+
+```
+$ make build
+```
+
+### Build with env vars
+
+```
+$ export BEARYCHAT_RTM_TOKEN=xxx
+$ export BEARYCHAT_RTM_CHANNEL=yyy
+$ make build
+```
+
 ## LICENSE
 
 MIT
