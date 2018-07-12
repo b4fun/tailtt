@@ -101,7 +101,7 @@ func main() {
 	for line := range t.Lines {
 		if keywords.MatchLine(line.Text) {
 			ctx := context.Background()
-			if err := notifier.Notify(ctx, line.Text); err != nil {
+			if err := notifier.Notify(ctx, t.Filename, line.Text); err != nil {
 				abort(err)
 			}
 		}

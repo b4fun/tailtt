@@ -25,10 +25,16 @@ func MustNewBearychatRTM(rtmToken, channel string) *BearychatRTM {
 	}
 }
 
-func (b BearychatRTM) Notify(ctx context.Context, line string) error {
+func (b BearychatRTM) Notify(ctx context.Context, filename, line string) error {
 	return b.rtmClient.Incoming(bearychat.RTMIncoming{
-		Text:       fmt.Sprintf("**line found**: %s", line),
+		Text:       fmt.Sprintf("tailtt: `%s`", filename),
 		VChannelId: b.channel,
 		Markdown:   true,
+		Attachments: []bearychat.IncomingAttachment{
+			{
+				Text:  line,
+				Color: "#f44336",
+			},
+		},
 	})
 }
