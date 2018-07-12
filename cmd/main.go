@@ -94,7 +94,10 @@ func main() {
 	}
 	notifier := notification.NewNotifier(notifies)
 
-	t, err := tail.TailFile(*file, tail.Config{Follow: true})
+	t, err := tail.TailFile(*file, tail.Config{
+		Location: &tail.SeekInfo{Offset: -1, Whence: os.SEEK_END},
+		Follow:   true,
+	})
 	if err != nil {
 		abort(err)
 	}
