@@ -110,11 +110,20 @@ func main() {
 		os.Exit(1)
 	}()
 
+	var notifyErrorTimes int
 	for line := range t.Lines {
 		if keywords.MatchLine(line.Text) {
 			ctx := context.Background()
 			if err := notifier.Notify(ctx, t.Filename, line.Text); err != nil {
-				abort(err)
+				if err != nil {
+					notifyErrorTimes++
+					if notifyErrorTimes > 10 {
+						abort(err)
+					}
+					fmt.Println("notify error:", err)
+				} else {
+					notifyErrorTimes = 0
+				}
 			}
 		}
 	}
