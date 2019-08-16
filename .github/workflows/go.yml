@@ -20,8 +20,6 @@ jobs:
       run: |
         mkdir -p /home/runner/go/bin
         go get -v -t -d ./...
-        curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-        /home/runner/go/bin/dep ensure
 
     - name: Build
       run: go build -v .
